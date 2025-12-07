@@ -1,0 +1,83 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '4.0.0'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.rag'
+version = '0.0.1-SNAPSHOT'
+description = 'Demo project for Spring Boot'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+	/* --- Spring Core (최신 자동) --- */
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	/* --- JPA / PostgreSQL (최신 자동) --- */
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.postgresql:postgresql'
+
+	/* --- pgvector Java Driver --- */
+	implementation 'com.pgvector:pgvector:0.1.6'
+
+	/* --- QueryDSL (유일하게 버전 명시 필요: 안정 버전) --- */
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor 'com.querydsl:querydsl-apt:5.0.0:jakarta'
+	annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
+	annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
+
+	/* --- 파일 처리 (최신 자동) --- */
+	implementation 'org.apache.pdfbox:pdfbox:2.0.24'
+	implementation 'org.apache.poi:poi-ooxml:5.4.0'
+	implementation 'org.apache.tika:tika-core:2.9.0'
+
+	/* --- Lombok (최신 자동) --- */
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	/* --- Dev / Test --- */
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// AWS SDK v2 BOM (버전 한 번에 관리)
+	implementation platform('software.amazon.awssdk:bom:2.25.60')
+	implementation 'software.amazon.awssdk:s3'
+	/*
+	implementation 'com.vladmihalcea:hibernate-types-60:2.21.1'
+	//implementation 'ai.pgvector:pgvector:0.1.6'
+	implementation 'io.hypersistence:hypersistence-utils-hibernate-60:3.9.0'
+	*/
+
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly   'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly   'io.jsonwebtoken:jjwt-jackson:0.11.5' // JSON 처리
+
+}
+
+/* QueryDSL Q클래스 생성 위치 */
+sourceSets {
+	main {
+		java {
+			srcDirs += 'build/generated/sources/annotationProcessor/java/main'
+		}
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

@@ -1,0 +1,47 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope:
+              - profile
+              - email
+        provider:
+          google:
+            issuer-uri: https://accounts.google.com
+  application:
+    name: lecturelens
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lecturedb
+    username: lecture_user
+    password: VeryStrongPassword123!
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
+app:
+  s3:
+    bucket: lecturelens-dev    # S3 버킷 이름
+    base-dir: lectures                 # 버킷 내 루트 경로 prefix (폴더 느낌)
+    region: ap-northeast-2             # 서울 리전이면 이거
+openai:
+  api:
+    key: ${OPENAI_API_KEY}
+jwt:
+  secret: "ad26DEZDtkQas2szy91CzgJaFoaCTtXK7FNPbyxHOZQ="
+server:
+  forward-headers-strategy: framework
+
+
+
