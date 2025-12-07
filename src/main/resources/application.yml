@@ -39,7 +39,7 @@ openai:
   api:
     key: ${OPENAI_API_KEY}
 jwt:
-  secret: "ad26DEZDtkQas2szy91CzgJaFoaCTtXK7FNPbyxHOZQ="
+  secret: ${JWT_KEY}
 server:
   forward-headers-strategy: framework
 
