@@ -11,7 +11,7 @@ public class UsageResetScheduler {
 
     private final AppUserRepository appUserRepository;
 
-    @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0 4 * * *", zone = "Asia/Seoul")
     public void resetDailyUsage() {
         appUserRepository.resetUsageLimit();
     }
